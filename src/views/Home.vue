@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tile is-ancestor">
+    <div class="columns is-multiline">
       <div v-for="item in items" class="tile is-parent is-4">
         <article class="tile is-child box">
           <h4 class="title">{{item.message}}</h4>
@@ -33,9 +33,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.is-title {
-  text-transform: capitalize;
-}
-</style>
