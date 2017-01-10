@@ -9,6 +9,7 @@
           <h4 class="title">{{item.message}}</h4>
           <h4 class="title">{{item.message}}</h4>
           <h4 class="title">{{item.message}}</h4>
+          <router-link to="/detail" class="button is-primary is-fullwidth"  >View Detail</router-link>
         </article>
       </div>
     </div>

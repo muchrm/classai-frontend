@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import menuModule from 'vuex-store/modules/menu'
+import menuModule from 'vuex-store/modules/menu'
 Vue.use(Router)
 
 export default new Router({
@@ -13,7 +13,17 @@ export default new Router({
       path: '/',
       component: require('../views/Home')
     },
-    // ...generateRoutesFromMenu(menuModule.state.items),
+    {
+      name: 'View Detail',
+      path: '/detail',
+      component: require('../views/Detail')
+    },
+    {
+      name: 'View Chart',
+      path: '/chart',
+      component: require('../views/Chart')
+    },
+    ...generateRoutesFromMenu(menuModule.state.items),
     {
       path: '*',
       redirect: '/'
@@ -22,15 +32,15 @@ export default new Router({
 })
 
 // Menu should have 2 levels.
-// function generateRoutesFromMenu (menu = [], routes = []) {
-//   for (let i = 0, l = menu.length; i < l; i++) {
-//     let item = menu[i]
-//     if (item.path) {
-//       routes.push(item)
-//     }
-//     if (!item.component) {
-//       generateRoutesFromMenu(item.children, routes)
-//     }
-//   }
-//   return routes
-// }
+function generateRoutesFromMenu (menu = [], routes = []) {
+  for (let i = 0, l = menu.length; i < l; i++) {
+    let item = menu[i]
+    if (item.path) {
+      routes.push(item)
+    }
+    if (!item.component) {
+      generateRoutesFromMenu(item.children, routes)
+    }
+  }
+  return routes
+}

@@ -1,80 +1,71 @@
-var path = require('path')
-var config = require('../config')
-var utils = require('./utils')
-var projectRoot = path.resolve(__dirname, '../')
+'use strict'
 
-var env = process.env.NODE_ENV
-// check env & config/index.js to decide whether to enable CSS source maps for the
-// various preprocessor loaders added to vue-loader at the end of this file
-var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
-var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
-var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
+const path = require('path')
+const webpack = require('webpack')
+const config = require('../config')
+const utils = require('./utils')
+const projectRoot = path.resolve(__dirname, '../')
+
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ['./src/main.js'],
+    // If you want to support IE < 11, should add `babel-polyfill` to vendor.
+    // e.g. ['babel-polyfill', 'vue', 'vue-router', 'vuex']
+    vendor: ['vue', 'vue-router', 'vuex']
   },
   output: {
     path: config.build.assetsRoot,
-    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
+    publicPath: isProduction ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
     filename: '[name].js'
   },
   resolve: {
-    extensions: ['', '.js', '.vue', '.json'],
-    fallback: [path.join(__dirname, '../node_modules')],
+    extensions: ['.js', '.vue', '.css', '.json'],
     alias: {
-      'package': path.resolve(__dirname, '../package.json'),
-      'vue$': 'vue/dist/vue.common.js',
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components'),
-      'views': path.resolve(__dirname, '../client/views'),
-      //vue-addon
+      // https://github.com/vuejs/vue/wiki/Vue-2.0-RC-Starter-Resources
+      vue: 'vue/dist/vue',
+      package: path.resolve(__dirname, '../package.json'),
+      src: path.resolve(__dirname, '../src'),
+      assets: path.resolve(__dirname, '../src/assets'),
+      components: path.resolve(__dirname, '../src/components'),
+      views: path.resolve(__dirname, '../src/views'),
+      // third-party
+      'plotly.js': 'plotly.js/dist/plotly',
+      // vue-addon
       'vuex-store': path.resolve(__dirname, '../src/store')
     }
   },
-  resolveLoader: {
-    fallback: [path.join(__dirname, '../node_modules')]
-  },
   module: {
-    preLoaders: [
-      {
-        test: /\.vue$/,
-        loader: 'eslint',
-        include: [
-          path.join(projectRoot, 'src')
-        ],
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: [
-          path.join(projectRoot, 'src')
-        ],
-        exclude: /node_modules/
-      }
-    ],
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'eslint-loader',
+        include: projectRoot,
+        exclude: /node_modules/,
+        enforce: 'pre'
       },
       {
         test: /\.js$/,
-        loader: 'babel',
-        include: [
-          path.join(projectRoot, 'src')
-        ],
-        exclude: /node_modules/
+        loader: 'eslint-loader',
+        include: projectRoot,
+        exclude: /node_modules/,
+        enforce: 'pre'
       },
       {
-        test: /\.json$/,
-        loader: 'json'
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: projectRoot,
+        // /node_modules\/(?!vue-bulma-.*)/
+        exclude: [new RegExp(`node_modules\\${path.sep}(?!vue-bulma-.*)`)]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -82,7 +73,7 @@ module.exports = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
@@ -90,15 +81,23 @@ module.exports = {
       }
     ]
   },
-  eslint: {
-    formatter: require('eslint-friendly-formatter')
-  },
-  vue: {
-    loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
-    postcss: [
-      require('autoprefixer')({
-        browsers: ['last 2 versions']
-      })
-    ]
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      vue: {
+        loaders: utils.cssLoaders({
+          sourceMap: isProduction,
+          extract: isProduction
+        }),
+        postcss: [
+          require('autoprefixer')({
+            browsers: ['last 3 versions']
+          })
+        ]
+      }
+    })
+  ],
+  // See https://github.com/webpack/webpack/issues/3486
+  performance: {
+    hints: false
   }
 }

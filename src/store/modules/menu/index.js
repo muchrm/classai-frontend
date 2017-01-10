@@ -9,15 +9,7 @@ const state = {
   items: [
     {
       name: 'Dashboard',
-      path: '/dashboard',
-      meta: {
-        icon: 'fa-tachometer'
-      },
-      component: lazyLoading('dashboard', true)
-    },
-    {
-      name: 'Dashboard',
-      path: '/dashboard',
+      path: '/',
       meta: {
         icon: 'fa-tachometer'
       },

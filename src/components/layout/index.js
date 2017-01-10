@@ -1,5 +1,9 @@
-export {Navbar} from './Navbar'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
+import AppMain from './AppMain'
 
-export {Sidebar} from './Sidebar'
-
-export {AppMain} from './AppMain'
+export {
+    Navbar,
+    Sidebar,
+    AppMain
+}
