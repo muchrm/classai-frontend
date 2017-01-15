@@ -35,7 +35,7 @@
               <p class="isunderline tag is-dark">20</p>
             </div>
             <div class="column">
-              <span class="tag is-info is-medium"><</span>  <br>
+              <span class="tag is-info is-medium">มากกว่า</span>  <br>
               <p class="isunderline tag is-dark">1</p><span class="day">day</span>
             </div>
             <div class="column">
@@ -43,17 +43,6 @@
                 <p class="isunderline tag is-dark">73</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="columns box is-multiline">
-        <h4 class="title">SELL-SIGNAL</h4>
-        <div class="column is-child box is-12">
-          <p>11213</p>
-        </div>
-        <h4 class="title">SELL-FILTER</h4>
-        <div class="column is-child box is-12">
-          <p>11213</p>
         </div>
       </div>
       <router-link to="/chart" class="button is-primary column is-2 is-offset-5" >View Chart</router-link>

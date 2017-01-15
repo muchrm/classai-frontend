@@ -23,6 +23,11 @@ export default new Router({
       path: '/chart',
       component: require('../views/Chart')
     },
+    {
+      name: 'View Chart',
+      path: '/chart/transection',
+      component: require('../views/Transection')
+    },
     ...generateRoutesFromMenu(menuModule.state.items),
     {
       path: '*',
