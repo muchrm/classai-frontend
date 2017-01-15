@@ -3,12 +3,21 @@
     <div class="columns is-multiline">
       <div v-for="item in items" class="tile is-parent is-4">
         <article class="tile is-child box">
-          <h4 class="title">{{item.message}}</h4>
-          <h4 class="title">{{item.message}}</h4>
-          <h4 class="title">{{item.message}}</h4>
-          <h4 class="title">{{item.message}}</h4>
-          <h4 class="title">{{item.message}}</h4>
-          <h4 class="title">{{item.message}}</h4>
+          <div class="columns">
+            <div class="column">
+              <h2 class="title is-2">GAGR</h2>
+              <h6 class="subtitle is-smalles">อัตราการเจริญเติบโตโดยเฉลี่ยต่อปี</h6>
+              <p class="subtitle is-3">30.76%</p>
+            </div>
+            <div class="column">
+              <h2 class="title is-2 has-text-right">MACD</h2>
+              <h6 class="subtitle is-smalles has-text-right">การติดลบมากที่สุด</h6>
+              <p class="subtitle is-3 has-text-right">-15.39%</p>
+            </div>
+          </div>
+            <p class="column is-11 is-offset-1">Analysis: Middle-freq(จำนวนซื้อขายปานกลาง)</p>
+            <p class="column is-9 is-offset-3">Medium-term(เทรดระยะกลาง)</p>
+
           <router-link to="/detail" class="button is-primary is-fullwidth"  >View Detail</router-link>
         </article>
       </div>
@@ -34,3 +43,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+    .is-smalles{
+      font-size: 10px !important;
+    }
+</style>
