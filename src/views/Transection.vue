@@ -6,6 +6,7 @@
           <th>SYMBOL</th>
           <th>LOT</th>
           <th>RETURN</th>
+          <th>CHART</th>
         </tr>
       </thead>
       <tbody>
@@ -13,6 +14,7 @@
           <td>{{data.symbol}}</td>
           <td>{{data.lot}}</td>
           <td>{{data.return}}</td>
+          <td><router-link to="/chart/transection/candlestick" >Click</router-link></td>
         </tr>
       </tbody>
     </table>

@@ -24,9 +24,14 @@ export default new Router({
       component: require('../views/Chart')
     },
     {
-      name: 'View Chart',
+      name: 'View Transection',
       path: '/chart/transection',
       component: require('../views/Transection')
+    },
+    {
+      name: 'View Candlestick',
+      path: '/chart/transection/candlestick',
+      component: require('../views/CandlestickChart')
     },
     ...generateRoutesFromMenu(menuModule.state.items),
     {

@@ -1,60 +1,121 @@
 <template>
-  <div>
-    <table class="table is-striped">
-      <thead>
-        <tr>
-          <th>SYMBOL</th>
-          <th>LOT</th>
-          <th>RETURN</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="data in dataset">
-          <td>{{data.symbol}}</td>
-          <td>{{data.lot}}</td>
-          <td>{{data.return}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <vue-chart
+            chart-type="CandlestickChart"
+            :columns="columns"
+            :rows="rows"
+            :options="options"
+        >
+  </vue-chart>
 </template>
 
 <script>
+import Vue from 'vue'
+import VueCharts from 'vue-charts'
+
+Vue.use(VueCharts)
+
 export default {
+  components: {
+  },
   data () {
     return {
-      dataset: [
+      columns: [
         {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
+          'type': 'string'
         },
         {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
+          'type': 'number',
+          'label': 'Height-Low,Open-Close'
         },
         {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
+          'type': 'number'
         },
         {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
+          'type': 'number'
         },
         {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
-        },
-        {
-          symbol: 'GBPUSD',
-          lot: 0.5,
-          return: '18%'
-        }
-      ]
+          'type': 'number'
+        }],
+      rows: [
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15],
+       ['Mon', 20, 28, 38, 45],
+       ['Tue', 31, 38, 55, 66],
+       ['Wed', 50, 55, 77, 80],
+       ['Thu', 77, 77, 66, 50],
+       ['Fri', 68, 66, 22, 15]
+      ],
+      options: {
+        legend: 'none'
+      }
     }
   }
 }
