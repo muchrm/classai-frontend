@@ -4,6 +4,7 @@
 <script>
 import c3 from 'c3'
 import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   mounted () {
@@ -12,12 +13,21 @@ export default {
     .then(function (response) {
       vm.equity = response.data
       vm.render()
+      vm.setValueChart1(true)
     })
     .catch(function (error) {
       console.log(error)
     })
   },
+  computed: mapGetters({
+    valueChart1: 'menuitems',
+    valueChart2: 'menuitems'
+  }),
   methods: {
+    ...mapActions([
+      'setValueChart1',
+      'setValueChart2'
+    ]),
     render () {
       var vm = this
       c3.generate({

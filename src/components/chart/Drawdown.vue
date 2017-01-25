@@ -13,12 +13,21 @@ export default {
     .then(function (response) {
       vm.dd = response.data
       vm.render()
+      vm.setValueChart1(true)
     })
     .catch(function (error) {
       console.log(error)
     })
   },
+  computed: mapGetters({
+    valueChart1: 'menuitems',
+    valueChart2: 'menuitems'
+  }),
   methods: {
+    ...mapActions([
+      'setValueChart1',
+      'setValueChart2'
+    ]),
     render () {
       var vm = this
       console.log(vm)

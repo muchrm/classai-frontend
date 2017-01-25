@@ -19,6 +19,11 @@ export const switchEffect = ({ commit }, effectItem) => {
 
 export const setValueChart1 = ({ commit }, state) => {
   if (state) {
-    commit('chart', state)
+    commit('valueChart1', state)
+  }
+}
+export const setValueChart2 = ({ commit }, state) => {
+  if (state) {
+    commit('valueChart2', state)
   }
 }
