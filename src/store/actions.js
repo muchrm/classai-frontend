@@ -16,3 +16,9 @@ export const switchEffect = ({ commit }, effectItem) => {
     commit(types.SWITCH_EFFECT, effectItem)
   }
 }
+
+export const setValueChart1 = ({ commit }, state) => {
+  if (state) {
+    commit('chart', state)
+  }
+}

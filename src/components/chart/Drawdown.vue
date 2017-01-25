@@ -1,51 +1,92 @@
 <template>
-  <canvas id='chartjs'></canvas>
+  <div id='chartjs'></div>
 </template>
 <script>
-import Chart from 'chart.js'
+import c3 from 'c3'
+import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   mounted () {
-    this.chart = new Chart(
-    this.$el, {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'My First dataset',
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40],
-            spanGaps: false
-          }
-        ]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+    var vm = this
+    axios.get('http://classai.muchrm.me/data/dataDD2.json')
+    .then(function (response) {
+      vm.dd = response.data
+      vm.render()
     })
+    .catch(function (error) {
+      console.log(error)
+    })
+  },
+  methods: {
+    render () {
+      var vm = this
+      console.log(vm)
+      c3.generate({
+        bindto: vm.$el,
+        size: {
+          height: 220
+        },
+        // onmouseover: function () {
+        //   checkChart2 = true
+        // },
+        // onmouseout: function () {
+        //   checkChart2 = false
+        // },
+        data: {
+          json: vm.dd.data,
+          keys: {
+            x: 'date',
+            value: vm.dd.rule
+          },
+          type: 'spline'
+          // onmouseover: function (d) {
+          //   if (checkChart2) {
+          //     chart1.tooltip.show({x: d.x});
+          //   }
+          // },
+          // onmouseout: function (d) {
+          //   if (checkChart2) {
+          //     chart1.tooltip.hide();
+          //   }
+          // }
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              count: 10,
+              format: '%e %b %Y' // https://github.com/mbostock/d3/wiki/Time-Formatting#wiki-format
+            }
+          },
+          y: {
+            inner: true,
+            label: {
+              text: 'Drawdown',
+              position: 'outer-middle'
+            },
+            tick: {
+              format: function (x) { return x.toFixed(2) + ' %' }
+            }
+          }
+        },
+        point: {
+          show: false
+        },
+        transition: {
+          duration: 0
+        },
+        subchart: {
+          show: true,
+          onbrush: function (domain) {
+            // chart1.zoom(domain)
+          },
+          size: {
+            height: 20
+          }
+        }
+      })
+    }
   }
 }
 </script>

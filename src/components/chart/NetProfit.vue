@@ -1,51 +1,94 @@
 <template>
-  <canvas id='chartjs'></canvas>
+    <div id="chartJs"></div>
 </template>
 <script>
-import Chart from 'chart.js'
+import c3 from 'c3'
+import axios from 'axios'
 
 export default {
   mounted () {
-    this.chart = new Chart(
-    this.$el, {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'My First dataset',
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40],
-            spanGaps: false
-          }
-        ]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+    var vm = this
+    axios.get('http://classai.muchrm.me/data/dataEquity2.json')
+    .then(function (response) {
+      vm.equity = response.data
+      vm.render()
     })
+    .catch(function (error) {
+      console.log(error)
+    })
+  },
+  methods: {
+    render () {
+      var vm = this
+      c3.generate({
+        bindto: vm.$el,
+        size: {
+          height: 400
+        },
+      // onmouseover: function () {
+      //   checkChart1 = true
+      // },
+      // onmouseout: function () {
+      //   checkChart1 = false
+      // },
+        data: {
+          json: vm.equity.data,
+          keys: {
+            x: 'date',
+            value: vm.equity.rule
+          },
+          type: 'spline'
+          // onmouseover: function (d) {
+          //   if (checkChart1) {
+          //     chart2.tooltip.show({x: d.x});
+          //   }
+          // },
+          // onmouseout: function (d) {
+          //   if (checkChart1) {
+          //     chart2.tooltip.hide();
+          //   }
+          // }
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              count: 10,
+              format: '%e %b %Y'
+            }
+          },
+          y: {
+            inner: true,
+            label: {
+              text: 'Equity',
+              position: 'outer-middle'
+            },
+            tick: {
+              format: function (x) {
+                return vm.format(x) + ' ฿'
+              }
+            }
+          }
+        },
+        point: {
+          show: false
+        },
+        transition: {
+          duration: 0
+        }
+      })
+    },
+    format (num) {
+      return num
+      // var p = num.toFixed(fix).split('.')
+      // return p[0].split('').reduceRight(function (acc, num, i, orig) {
+      //   if (num === '-' && i === 0) {
+      //     return num + acc
+      //   }
+      //   var pos = orig.length - i - 1
+      //   return num + (pos && !(pos % 3) ? ',' : '') + acc
+      // }, '') + (p[1] ? '.' + p[1] : '')
+    }
   }
 }
 </script>
