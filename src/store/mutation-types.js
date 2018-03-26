@@ -8,4 +8,4 @@ export const SWITCH_EFFECT = 'SWITCH_EFFECT'
 
 export const valueChart1 = false
 
-export const valueChart2 = flase
+export const valueChart2 = false
